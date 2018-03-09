@@ -1,5 +1,47 @@
 import media
 import fresh_tomatoes
+from urllib.request import urlopen
+import json
+
+movies_id = [18, 245891, 118340, 2493, 43074, 1542]
+
+
+def get_db_url(id,type):
+    tmdb_key = "api_key"
+    url_start = "https://api.themoviedb.org/3/movie/"
+    if type == "movie":
+        db_url = url_start + id + "?api_key=" + tmdb_key
+    else:
+        if type == "trailer":
+            db_url = url_start + id + "/videos?api_key=" + tmdb_key
+    return db_url
+
+def get_db(id,type):
+    db_url = get_db_url(id, type)
+    data = json.load(urlopen(db_url))
+    return data
+
+def get_poster(poster_path):
+    url_start = "https://image.tmdb.org/t/p/"
+    poster_size = "w342"
+    url_poster = url_start + poster_size + poster_path
+    return url_poster
+
+def get_trailer(id):
+    trailer_data = get_db(id, "trailer")
+    yt_key = trailer_data["results"][0]["key"]
+    yt_url = "https://www.youtube.com/watch?v=" + yt_key
+    return yt_url
+
+def get_tmdb(id):
+    movie_data = get_db(id, "movie")
+    obj_name = (movie_data["title"]).replace(" ","_").lower()
+    title = movie_data["title"]
+    year = movie_data["release_date"][:4]
+    summary = movie_data["overview"]
+    poster_img = get_poster(movie_data["poster_path"])
+    trailer = get_trailer(id)
+
 
 # call on class movie to assign moives vaules to its variable
 fifth_element = media.Movie(

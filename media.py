@@ -1,7 +1,7 @@
 import webbrowser
 
 # Create Class Movie to store movie title, release date, rating, poster image, and trailer
-class Movie():
+class Movie(object):
     def __init__(self, movie_title, movie_date, movie_rating, poster_image, trailer_youtube):
         """ creates a movie object with title, date, rating, poster image, and trailer
         Args:
