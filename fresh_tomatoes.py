@@ -17,10 +17,22 @@ main_page_head = '''
         body {
             padding-top: 80px;
         }
+        footer {
+            background-color: #242424;
+            text-align: center
+        }
         #trailer .modal-dialog {
             margin-top: 200px;
             width: 640px;
             height: 480px;
+        }
+        .footer_text{
+            font-weight: bold;
+            color: #999;
+        }
+        .poster {
+            border: 10px solid;
+            padding: 15px;
         }
         .hanging-close {
             position: absolute;
@@ -31,6 +43,14 @@ main_page_head = '''
         #trailer-video {
             width: 100%;
             height: 100%;
+        }
+        .movie {
+            text-decoration: underline;
+        }
+        .logo {
+            display: block;
+            width: 125px;
+            margin:0 auto;
         }
         .movie-tile {
             margin-bottom: 20px;
@@ -114,15 +134,19 @@ main_page_content = '''
       {movie_tiles}
     </div>
   </body>
+  <footer>
+      <span class="footer_text">This product uses the TMDb API but is not endorsed or certified by TMDb.</span>
+      <img src="img/logo-green.png" class="logo" alt="The Movie Database Logo">
+  </footer
 </html>
 '''
 
 # A single movie entry html template
 movie_tile_content = '''
 <div class="col-md-6 col-lg-4 movie-tile text-center" data-trailer-youtube-id="{trailer_youtube_id}" data-toggle="modal" data-target="#trailer">
-    <img src="{poster_image_url}" width="220" height="342">
-    <h2>{movie_title}</h2>
-    <h3>{movie_date} - [{movie_rating}]</h3>
+    <img src="{poster_image_url}" class="poster" width="220" height="342">
+    <h2><span class="movie">{movie_title}</span> ({movie_date})</h2>
+    <h3>{movie_summary}</h3>
 </div>
 '''
 
@@ -141,7 +165,7 @@ def create_movie_tiles_content(movies):
             poster_image_url=movie.poster_image_url,
             trailer_youtube_id=trailer_youtube_id,
             movie_date=movie.date,
-            movie_rating=movie.rating
+            movie_summary=movie.summary
         )
     return content
 
