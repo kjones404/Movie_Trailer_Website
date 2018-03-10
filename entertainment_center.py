@@ -14,7 +14,7 @@ import media
 import fresh_tomatoes
 
 
-def get_db_url(id,type):
+def get_db_url(id, type):
     """Build database request url.
 
     Args:
@@ -34,7 +34,8 @@ def get_db_url(id,type):
             db_url = url_start + id + "/videos?api_key=" + tmdb_key
     return db_url
 
-def get_db(id,type):
+
+def get_db(id, type):
     """Use database url to pull json dictionary.
 
     Args:
@@ -50,6 +51,7 @@ def get_db(id,type):
     data = json.load(urlopen(db_url))
     return data
 
+
 def get_poster(poster_path):
     """Compete the file path for poster image.
 
@@ -64,6 +66,7 @@ def get_poster(poster_path):
     poster_size = "w342"  # select image size
     url_poster = url_start + poster_size + poster_path
     return url_poster
+
 
 def get_trailer(id):
     """Compete the file path for movie trailer.
@@ -81,6 +84,7 @@ def get_trailer(id):
     yt_url = "https://www.youtube.com/watch?v=" + yt_key
     return yt_url
 
+
 def get_tmdb(movie_info):
     """Compile list used to generate moive class object.
 
@@ -96,7 +100,7 @@ def get_tmdb(movie_info):
     """
     id = movie_info[0]
     movie_data = get_db(id, "movie")
-    obj_name = (movie_data["title"]).replace(" ","_").lower()
+    obj_name = (movie_data["title"]).replace(" ", "_").lower()
     title = movie_data["title"]
     year = movie_data["release_date"][:4]  # release_date formated YYYY-MM-DD
     summary = movie_data["overview"]
@@ -104,6 +108,7 @@ def get_tmdb(movie_info):
     trailer = get_trailer(id)
     movie_info.extend([obj_name, title, year, summary, poster_img, trailer])
     return movie_info
+
 
 def main():
     """Generate movie class object.  Generate website HTML.
@@ -131,5 +136,5 @@ def main():
 
 
 if __name__ == '__main__':
-     # will only be executed when ran directly
+    # will only be executed when ran directly
     main()
